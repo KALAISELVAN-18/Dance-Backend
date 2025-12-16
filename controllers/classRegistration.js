@@ -12,7 +12,7 @@ const createClassRegistration = async (req, res) => {
       fullName,
       email,
       phoneNumber,
-      age,
+      age: parseInt(age),
       experienceLevel,
       preferredSchedule
     });
