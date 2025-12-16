@@ -5,8 +5,8 @@ const instructorSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   phoneNumber: { type: String, required: true },
   specialization: { type: String, required: true },
-  experience: { type: String, required: true },
-  bio: { type: String, required: true },
+  experience: { type: String, default: '' },
+  bio: { type: String, default: '' },
   createdAt: { type: Date, default: Date.now }
 });
 

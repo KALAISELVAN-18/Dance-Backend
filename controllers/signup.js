@@ -123,4 +123,37 @@ const updateUserRole = async (req, res) => {
   }
 };
 
-module.exports = { register, login, adminLogin, getAllUsers, updateUserRole };
+const setupAdmin = async (req, res) => {
+  try {
+    // Check if admin already exists
+    const existingAdmin = await User.findOne({ role: 'admin' });
+    if (existingAdmin) {
+      return res.status(400).json({ message: 'Admin user already exists' });
+    }
+
+    // Create admin user
+    const adminEmail = process.env.ADMIN_EMAIL || 'admin@danceacademy.com';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'Admin@123';
+    
+    const hashedPassword = await bcrypt.hash(adminPassword, 10);
+    
+    const admin = new User({
+      fullName: 'Dance Academy Admin',
+      email: adminEmail,
+      password: hashedPassword,
+      role: 'admin'
+    });
+
+    await admin.save();
+    
+    res.json({ 
+      message: 'Admin user created successfully',
+      email: adminEmail
+    });
+  } catch (error) {
+    console.error('Setup admin error:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { register, login, adminLogin, getAllUsers, updateUserRole, setupAdmin };

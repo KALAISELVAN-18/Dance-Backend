@@ -4,8 +4,8 @@ const createInstructor = async (req, res) => {
   try {
     const { fullName, email, phoneNumber, specialization, experience, bio } = req.body;
     
-    if (!fullName || !email || !phoneNumber || !specialization || !experience || !bio) {
-      return res.status(400).json({ message: 'All fields are required' });
+    if (!fullName || !email || !phoneNumber || !specialization) {
+      return res.status(400).json({ message: 'Name, email, phone, and specialization are required' });
     }
     
     const existingInstructor = await Instructor.findOne({ email });
@@ -18,8 +18,8 @@ const createInstructor = async (req, res) => {
       email,
       phoneNumber,
       specialization,
-      experience,
-      bio
+      experience: experience || '',
+      bio: bio || ''
     });
     
     await instructor.save();
@@ -43,11 +43,11 @@ const getAllInstructors = async (req, res) => {
 
 const updateInstructor = async (req, res) => {
   try {
-    const { name, email, phone, specialization, experience, bio } = req.body;
+    const { fullName, email, phoneNumber, specialization, experience, bio } = req.body;
     
     const instructor = await Instructor.findByIdAndUpdate(
       req.params.id,
-      { fullName: name, email, phoneNumber: phone, specialization, experience, bio },
+      { fullName, email, phoneNumber, specialization, experience: experience || '', bio: bio || '' },
       { new: true }
     );
     
