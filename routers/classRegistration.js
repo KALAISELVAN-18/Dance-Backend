@@ -1,9 +1,9 @@
 const express = require('express');
-const { createClassRegistration, getAllClassRegistrations } = require('../controllers/classRegistration');
-const auth = require('../middleware/auth');
+const classRegistrationController = require('../controllers/classRegistration');
+const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-router.post('/', createClassRegistration);
-router.get('/', auth, getAllClassRegistrations);
+router.post('/', classRegistrationController.createClassRegistration);
+router.get('/', authMiddleware.adminAuth, classRegistrationController.getAllClassRegistrations);
 
 module.exports = router;

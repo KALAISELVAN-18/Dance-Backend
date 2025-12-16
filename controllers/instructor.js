@@ -41,6 +41,27 @@ const getAllInstructors = async (req, res) => {
   }
 };
 
+const updateInstructor = async (req, res) => {
+  try {
+    const { name, email, phone, specialization, experience, bio } = req.body;
+    
+    const instructor = await Instructor.findByIdAndUpdate(
+      req.params.id,
+      { fullName: name, email, phoneNumber: phone, specialization, experience, bio },
+      { new: true }
+    );
+    
+    if (!instructor) {
+      return res.status(404).json({ message: 'Instructor not found' });
+    }
+    
+    res.json({ message: 'Instructor updated successfully', instructor });
+  } catch (error) {
+    console.error('Instructor update error:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const deleteInstructor = async (req, res) => {
   try {
     await Instructor.findByIdAndDelete(req.params.id);
@@ -51,4 +72,4 @@ const deleteInstructor = async (req, res) => {
   }
 };
 
-module.exports = { createInstructor, getAllInstructors, deleteInstructor };
+module.exports = { createInstructor, getAllInstructors, updateInstructor, deleteInstructor };

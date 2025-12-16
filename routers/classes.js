@@ -1,10 +1,10 @@
 const express = require('express');
-const { getAllClasses, createClass, deleteClass } = require('../controllers/classes');
-const { auth, adminAuth } = require('../middleware/auth');
+const classesController = require('../controllers/classes');
+const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-router.get('/', getAllClasses);
-router.post('/', adminAuth, createClass);
-router.delete('/:id', adminAuth, deleteClass);
+router.get('/', classesController.getAllClasses);
+router.post('/', authMiddleware.adminAuth, classesController.createClass);
+router.delete('/:id', authMiddleware.adminAuth, classesController.deleteClass);
 
 module.exports = router;

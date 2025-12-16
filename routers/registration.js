@@ -1,13 +1,10 @@
 const express = require('express');
-const { createRegistration, getAllRegistrations, deleteRegistration } = require('../controllers/registeration');
-const auth = require('../middleware/auth');
+const registrationController = require('../controllers/registeration');
+const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-router.post('/', auth, createRegistration);
-router.get('/', (req, res) => {
-  res.json({ message: 'GET registrations working' });
-});
-router.get('/all', getAllRegistrations);
-router.delete('/:id', auth, deleteRegistration);
+router.post('/', authMiddleware.auth, registrationController.createRegistration);
+router.get('/', authMiddleware.adminAuth, registrationController.getAllRegistrations);
+router.delete('/:id', authMiddleware.adminAuth, registrationController.deleteRegistration);
 
 module.exports = router;
