@@ -1,5 +1,5 @@
 const express = require('express');
-const { createContact, getAllContacts } = require('../Controllers/contact');
+const { createContact, getAllContacts } = require('../controllers/contact');
 const auth = require('../middleware/auth');
 const router = express.Router();
 

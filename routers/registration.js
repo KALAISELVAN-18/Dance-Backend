@@ -1,5 +1,5 @@
 const express = require('express');
-const { createRegistration, getAllRegistrations, deleteRegistration } = require('../Controllers/registeration');
+const { createRegistration, getAllRegistrations, deleteRegistration } = require('../controllers/registeration');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
