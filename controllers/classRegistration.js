@@ -36,4 +36,14 @@ const getAllClassRegistrations = async (req, res) => {
   }
 };
 
-module.exports = { createClassRegistration, getAllClassRegistrations };
+const deleteClassRegistration = async (req, res) => {
+  try {
+    await ClassRegistration.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Class registration deleted successfully' });
+  } catch (error) {
+    console.error('Class registration deletion error:', error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { createClassRegistration, getAllClassRegistrations, deleteClassRegistration };
