@@ -5,6 +5,5 @@ const router = express.Router();
 
 router.post('/', classRegistrationController.createClassRegistration);
 router.get('/', authMiddleware.adminAuth, classRegistrationController.getAllClassRegistrations);
-router.delete('/:id', authMiddleware.adminAuth, classRegistrationController.deleteClassRegistration);
 
 module.exports = router;

@@ -7,14 +7,32 @@ const testRoute = (req, res) => {
 
 const createRegistration = async (req, res) => {
   try {
-    const { classId, className, userEmail } = req.body;
-    console.log('Creating registration:', { classId, className, userEmail, userId: req.userId });
-    const registration = new Registration({
-      userId: req.userId,
+    const { 
+      fullName, 
+      email, 
+      phone, 
+      age, 
+      experienceLevel, 
+      preferredSchedule, 
+      className, 
       classId,
+      userEmail // for admin created registrations
+    } = req.body;
+    
+    console.log('Creating registration with data:', req.body);
+    
+    const registration = new Registration({
+      userId: req.userId || null,
+      classId: classId || 'user-registration',
       className,
-      userEmail
+      userEmail: userEmail || email,
+      fullName,
+      phone,
+      age,
+      experienceLevel,
+      preferredSchedule
     });
+    
     const savedRegistration = await registration.save();
     console.log('Registration saved successfully:', savedRegistration);
     res.json(savedRegistration);
